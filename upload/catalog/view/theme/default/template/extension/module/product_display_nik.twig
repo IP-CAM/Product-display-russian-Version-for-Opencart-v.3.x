@@ -1,0 +1,262 @@
+{% if display_heading %}
+  <h3>{{ name }}</h3>
+{% endif %}
+
+{% macro separately_carousel(products, number, title) %}
+  <h4>{{ title }}</h4>
+  <div class="swiper-viewport">
+    <div id="display-product-carousel{{ module }}-{{ number }}" class="swiper-container">
+      <div class="swiper-wrapper">
+        {% for product in products %}
+          <div class="swiper-slide product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="product-thumb transition">
+              <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+              <div class="caption">
+                <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+                <p>{{ product.description }}</p>
+                {% if product.rating %}
+                  <div class="rating">
+                    {% for i in 5 %}
+                      {% if product.rating < i %}
+                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                      {% else %}
+                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                {% if product.price %}
+                  <p class="price">
+                    {% if not product.special %}
+                      {{ product.price }}
+                    {% else %}
+                      <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+                    {% endif %}
+                    {% if product.tax %}
+                      <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+                    {% endif %}
+                  </p>
+                {% endif %}
+              </div>
+              <div class="button-group">
+                <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+                <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+                <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="swiper-pagination display-product-carousel-carousel{{ module }}-{{ number }}"></div>
+    <div class="swiper-pager">
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
+      $('#display-product-carousel{{ module }}-{{ number }}').swiper({
+          mode: 'horizontal',
+          slidesPerView: 4,
+          pagination: '.display-product-carousel{{ module }}-{{ number }}',
+          paginationClickable: true,
+          nextButton: '.swiper-button-next',
+          prevButton: '.swiper-button-prev',
+          autoplay: 2500,
+          loop: true
+      });
+  --></script>
+{% endmacro %}
+
+{% macro separately_table(products, number, title) %}
+  <h4>{{ title }}</h4>
+  <div class="row separately-table{{ number }}">
+    {% for product in products %}
+      <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="product-thumb transition">
+          <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+          <div class="caption">
+            <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+            <p>{{ product.description }}</p>
+            {% if product.rating %}
+              <div class="rating">
+                {% for i in 5 %}
+                  {% if product.rating < i %}
+                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                  {% else %}
+                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if product.price %}
+              <p class="price">
+                {% if not product.special %}
+                  {{ product.price }}
+                {% else %}
+                  <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+                {% endif %}
+                {% if product.tax %}
+                  <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+                {% endif %}
+              </p>
+            {% endif %}
+          </div>
+          <div class="button-group">
+            <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+            <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+            <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro separately_list(products, number, title) %}
+    <h4>{{ title }}</h4>
+    {% for product in products %}
+      <div class="row separately-table{{ number }}">
+        <div class="product-layout col-lg-12">
+          <div class="product-thumb transition">
+            <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+            <div class="caption">
+              <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+              <p>{{ product.description }}</p>
+              {% if product.rating %}
+                <div class="rating">
+                  {% for i in 5 %}
+                    {% if product.rating < i %}
+                      <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                    {% else %}
+                      <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+              {% if product.price %}
+                <p class="price">
+                  {% if not product.special %}
+                    {{ product.price }}
+                  {% else %}
+                    <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+                  {% endif %}
+                  {% if product.tax %}
+                    <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+                  {% endif %}
+                </p>
+              {% endif %}
+            </div>
+            <div class="button-group">
+              <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+              <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+              <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro tab(products, number) %}
+  {% for product in products %}
+      <div class="product-layout col-lg-12">
+        <div class="product-thumb transition">
+          <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+          <div class="caption">
+            <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+            <p>{{ product.description }}</p>
+            {% if product.rating %}
+              <div class="rating">
+                {% for i in 5 %}
+                  {% if product.rating < i %}
+                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                  {% else %}
+                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if product.price %}
+              <p class="price">
+                {% if not product.special %}
+                  {{ product.price }}
+                {% else %}
+                  <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+                {% endif %}
+                {% if product.tax %}
+                  <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+                {% endif %}
+              </p>
+            {% endif %}
+          </div>
+          <div class="button-group">
+            <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+            <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+            <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+          </div>
+        </div>
+      </div>
+  {% endfor %}
+{% endmacro %}
+
+{% if display_type == 'carousel' %}
+  {% if display_format %}
+
+    {{ _self.separately_carousel(ordered_products, 1, text_ordered) }}
+    {{ _self.separately_carousel(viewed_products, 2, text_viewed) }}
+    {{ _self.separately_carousel(favorite_products, 3, text_favorite) }}
+    {{ _self.separately_carousel(bestsellers_products, 4, text_bestsellers) }}
+    {{ _self.separately_carousel(recommended_products, 5, text_recommended) }}
+
+  {% else %}
+
+  {% endif %}
+
+{% elseif display_type == 'table' %}
+  {% if display_format %}
+
+    {{ _self.separately_table(ordered_products, 1, text_ordered) }}
+    {{ _self.separately_table(viewed_products, 2, text_viewed) }}
+    {{ _self.separately_table(favorite_products, 3, text_favorite) }}
+    {{ _self.separately_table(bestsellers_products, 4, text_bestsellers) }}
+    {{ _self.separately_table(recommended_products, 5, text_recommended) }}
+
+  {% else %}
+
+  {% endif %}
+
+{% elseif display_type == 'list' %}
+  {% if display_format %}
+
+    {{ _self.separately_list(ordered_products, 1, text_ordered) }}
+    {{ _self.separately_list(viewed_products, 2, text_viewed) }}
+    {{ _self.separately_list(favorite_products, 3, text_favorite) }}
+    {{ _self.separately_list(bestsellers_products, 4, text_bestsellers) }}
+    {{ _self.separately_list(recommended_products, 5, text_recommended) }}
+
+  {% else %}
+
+  {% endif %}
+
+{% elseif display_type == 'tabs' %}
+
+
+
+{% elseif display_type == 'tabsInPopup' %}
+
+  {{ _self.separately_table(ordered_products, 1, text_ordered) }}
+  {{ _self.separately_table(viewed_products, 2, text_viewed) }}
+  {{ _self.separately_table(favorite_products, 3, text_favorite) }}
+  {{ _self.separately_table(bestsellers_products, 4, text_bestsellers) }}
+  {{ _self.separately_table(recommended_products, 5, text_recommended) }}
+
+{% elseif display_type == 'tabsWithCarousel' %}
+
+  {{ _self.separately_list(ordered_products, 1, text_ordered) }}
+  {{ _self.separately_list(viewed_products, 2, text_viewed) }}
+  {{ _self.separately_list(favorite_products, 3, text_favorite) }}
+  {{ _self.separately_list(bestsellers_products, 4, text_bestsellers) }}
+  {{ _self.separately_list(recommended_products, 5, text_recommended) }}
+
+{% endif %}
