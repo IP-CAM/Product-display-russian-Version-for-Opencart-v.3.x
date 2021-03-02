@@ -63,6 +63,12 @@ class ControllerExtensionModuleProductDisplayNik extends Controller {
 			$data['error_recommendation_count_products'] = '';
 		}
 
+        if (isset($this->error['button_class'])) {
+            $data['error_button_class'] = $this->error['button_class'];
+        } else {
+            $data['error_button_class'] = '';
+        }
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
