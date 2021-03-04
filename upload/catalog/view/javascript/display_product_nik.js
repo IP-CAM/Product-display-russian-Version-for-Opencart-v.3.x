@@ -6,7 +6,7 @@ $(document).ready(function () {
         let cookieVal = [];
         if (!wishlist) {
             cookieVal.push(productId)
-            setCookie('wishlist', cookieVal, {'max-age': 3600});
+            setCookie('wishlist', cookieVal, {'max-age': 2628000});
         } else {
             cookieVal = wishlist.split(',')
             if(!cookieVal.includes(productId)) {
@@ -17,7 +17,7 @@ $(document).ready(function () {
                     cookieVal.splice(index, 1);
                 }
             }
-            setCookie('wishlist', cookieVal, {'max-age': 3600});
+            setCookie('wishlist', cookieVal, {'max-age': 2628000});
         }
     })
 
@@ -36,13 +36,13 @@ $(document).ready(function () {
         let cookieVal = [];
         if (!viewed_products) {
             cookieVal.push(productId)
-            setCookie('viewed_products', cookieVal, {'max-age': 3600});
+            setCookie('viewed_products', cookieVal, {'max-age': 2628000});
         } else {
             cookieVal = viewed_products.split(',')
             if(!cookieVal.includes(productId)) {
                 cookieVal.push(productId)
             }
-            setCookie('viewed_products', cookieVal, {'max-age': 3600});
+            setCookie('viewed_products', cookieVal, {'max-age': 2628000});
         }
         console.log('added')
     }
@@ -80,10 +80,6 @@ $(document).ready(function () {
 
         document.cookie = updatedCookie;
     }
-
-// Пример использования:
-    setCookie('user', 'John', {secure: true, 'max-age': 3600});
-
 
     function deleteCookie(name) {
         setCookie(name, "", {

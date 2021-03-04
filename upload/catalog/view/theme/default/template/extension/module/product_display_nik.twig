@@ -1,3 +1,24 @@
+<style>
+  .product-thumb {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+  .product-thumb-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .product-thumb-list-leftside {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .product-thumb-list-leftside .image {
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
 {% macro separately_carousel(products, number, title) %}
   <h4>{{ title }}</h4>
   <div class="swiper-viewport">
@@ -59,6 +80,20 @@
           nextButton: '.swiper-button-next{{ module }}-{{ number }}',
           prevButton: '.swiper-button-prev{{ module }}-{{ number }}',
           autoplay: 2500,
+          breakpoints: {
+              // when window width is >= 480px
+              480: {
+                  slidesPerView: 1,
+              },
+              // when window width is >= 640px
+              640: {
+                  slidesPerView: 2,
+              },
+              // when window width is >= 640px
+              768: {
+                  slidesPerView: 3,
+              }
+          }
       });
   --></script>
 {% endmacro %}
@@ -113,40 +148,45 @@
     {% for product in products %}
       <div class="row separately-table{{ number }}">
         <div class="product-layout col-lg-12">
-          <div class="product-thumb transition">
-            <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
-            <div class="caption">
-              <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
-              <p>{{ product.description }}</p>
-              {% if product.rating %}
-                <div class="rating">
-                  {% for i in 5 %}
-                    {% if product.rating < i %}
-                      <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+          <div class="product-thumb-list product-thumb transition">
+            <div class="product-thumb-list-leftside col-sm-6 col-xs-12">
+              <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+            </div>
+            <div class="product-thumb-list-rightside col-sm-6 col-xs-12">
+              <div class="caption">
+                <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+                <p>{{ product.description }}</p>
+                {% if product.rating %}
+                  <div class="rating">
+                    {% for i in 5 %}
+                      {% if product.rating < i %}
+                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                      {% else %}
+                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                {% if product.price %}
+                  <p class="price">
+                    {% if not product.special %}
+                      {{ product.price }}
                     {% else %}
-                      <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                      <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
                     {% endif %}
-                  {% endfor %}
-                </div>
-              {% endif %}
-              {% if product.price %}
-                <p class="price">
-                  {% if not product.special %}
-                    {{ product.price }}
-                  {% else %}
-                    <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
-                  {% endif %}
-                  {% if product.tax %}
-                    <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
-                  {% endif %}
-                </p>
-              {% endif %}
+                    {% if product.tax %}
+                      <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+                    {% endif %}
+                  </p>
+                {% endif %}
+              </div>
+              <div class="button-group">
+                <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+                <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+                <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+              </div>
             </div>
-            <div class="button-group">
-              <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
-              <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
-              <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
-            </div>
+
           </div>
         </div>
       </div>
@@ -259,7 +299,21 @@
               prevButton: '.swiper-button-prev{{ module }}-{{ number }}',
               autoplay: 2500,
               observer: true,
-              observeParents: true
+              observeParents: true,
+              breakpoints: {
+                  // when window width is >= 480px
+                  480: {
+                      slidesPerView: 1,
+                  },
+                  // when window width is >= 640px
+                  640: {
+                      slidesPerView: 2,
+                  },
+                  // when window width is >= 640px
+                  768: {
+                      slidesPerView: 3,
+                  }
+              }
           });
       })
   </script>
@@ -393,7 +447,7 @@
 
 {% if display_type == 'carousel' %}
   {% if display_heading %}
-    <h3>{{ name }}</h3>
+      <h3>{{ name }}</h3>
   {% endif %}
 
   {% if display_format %}
@@ -439,6 +493,20 @@
             nextButton: '.swiper-button-next-random-carousel{{ module }}',
             prevButton: '.swiper-button-prev-random-carousel{{ module }}',
             autoplay: 2500,
+            breakpoints: {
+                // when window width is >= 480px
+                480: {
+                    slidesPerView: 1,
+                },
+                // when window width is >= 640px
+                640: {
+                    slidesPerView: 2,
+                },
+                // when window width is >= 640px
+                768: {
+                    slidesPerView: 3,
+                }
+            }
         });
     --></script>
   {% endif %}
@@ -507,10 +575,11 @@
 
 {% elseif display_type == 'tabs' %}
 
+  {% if display_heading %}
+    <h3>{{ name }}</h3>
+  {% endif %}
+
   <div class="row">
-    {% if display_heading %}
-      <h3>{{ name }}</h3>
-    {% endif %}
 
     <ul class="nav nav-tabs" id="display_product_tabs{{ module }}">
       {% if ordered_products %}
@@ -638,10 +707,10 @@
 
 {% elseif display_type == 'tabsWithCarousel' %}
 
+  {% if display_heading %}
+    <h3>{{ name }}</h3>
+  {% endif %}
   <div class="row tab-with-carousel{{ module }}">
-    {% if display_heading %}
-      <h3>{{ name }}</h3>
-    {% endif %}
 
     <ul class="nav nav-tabs" id="display_product_tabs{{ module }}">
       {% if ordered_products %}

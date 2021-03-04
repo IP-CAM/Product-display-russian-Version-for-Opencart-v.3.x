@@ -69,6 +69,18 @@ class ControllerExtensionModuleProductDisplayNik extends Controller {
             $data['error_button_class'] = '';
         }
 
+//        if (isset($this->error['cookie_lifetime_favorite'])) {
+//            $data['error_cookie_lifetime_favorite'] = $this->error['cookie_lifetime_favorite'];
+//        } else {
+//            $data['error_cookie_lifetime_favorite'] = '';
+//        }
+//
+//        if (isset($this->error['cookie_lifetime_viewed'])) {
+//            $data['error_cookie_lifetime_viewed'] = $this->error['cookie_lifetime_viewed'];
+//        } else {
+//            $data['error_cookie_lifetime_viewed'] = '';
+//        }
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -265,6 +277,39 @@ class ControllerExtensionModuleProductDisplayNik extends Controller {
 			$data['button_class'] = '';
 		}
 
+
+//        if (isset($this->request->post['cookie_lifetime_favorite'])) {
+//            $data['cookie_lifetime_favorite'] = $this->request->post['cookie_lifetime_favorite'];
+//        } elseif (!empty($module_info)) {
+//            $data['cookie_lifetime_favorite'] = $module_info['cookie_lifetime_favorite'];
+//        } else {
+//            $data['cookie_lifetime_favorite'] = '';
+//        }
+//
+//        if (isset($this->request->post['cookie_lifetime_favorite_time_unit'])) {
+//            $data['cookie_lifetime_favorite_time_unit'] = $this->request->post['cookie_lifetime_favorite_time_unit'];
+//        } elseif (!empty($module_info)) {
+//            $data['cookie_lifetime_favorite_time_unit'] = $module_info['cookie_lifetime_favorite_time_unit'];
+//        } else {
+//            $data['cookie_lifetime_favorite_time_unit'] = 'minute';
+//        }
+//
+//        if (isset($this->request->post['cookie_lifetime_viewed'])) {
+//            $data['cookie_lifetime_viewed'] = $this->request->post['cookie_lifetime_viewed'];
+//        } elseif (!empty($module_info)) {
+//            $data['cookie_lifetime_viewed'] = $module_info['cookie_lifetime_viewed'];
+//        } else {
+//            $data['cookie_lifetime_viewed'] = '';
+//        }
+//
+//        if (isset($this->request->post['cookie_lifetime_viewed_time_unit'])) {
+//            $data['cookie_lifetime_viewed_time_unit'] = $this->request->post['cookie_lifetime_viewed_time_unit'];
+//        } elseif (!empty($module_info)) {
+//            $data['cookie_lifetime_viewed_time_unit'] = $module_info['cookie_lifetime_viewed_time_unit'];
+//        } else {
+//            $data['cookie_lifetime_viewed_time_unit'] = 'minute';
+//        }
+
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
 		} elseif (!empty($module_info)) {
@@ -292,9 +337,6 @@ class ControllerExtensionModuleProductDisplayNik extends Controller {
                 // get all
                 $results = $this->model_catalog_product->getProducts();
             }
-
-
-
 
             foreach ($results as $result) {
                 $json[] = array(
@@ -360,6 +402,14 @@ class ControllerExtensionModuleProductDisplayNik extends Controller {
                 $this->error['recommendation_count_products'] = $this->language->get('error_count_products');
             }
         }
+//
+//        if (!$this->request->post['cookie_lifetime_favorite']) {
+//            $this->error['cookie_lifetime_favorite'] = $this->language->get('error_cookie_lifetime_favorite');
+//        }
+//
+//        if (!$this->request->post['cookie_lifetime_viewed']) {
+//            $this->error['cookie_lifetime_viewed'] = $this->language->get('error_cookie_lifetime_viewed');
+//        }
 
 		return !$this->error;
 	}
