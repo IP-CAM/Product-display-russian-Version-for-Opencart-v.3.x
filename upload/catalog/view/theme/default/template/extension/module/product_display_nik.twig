@@ -17,12 +17,15 @@
     display: flex;
     justify-content: center;
   }
+  .display-product-nik-modal-container{{ module }} .tab-content {
+    display: flex;
+  }
 </style>
 
 {% macro separately_carousel(products, number, title) %}
   <h4>{{ title }}</h4>
   <div class="swiper-viewport">
-    <div id="display-product-carousel{{ module }}-{{ number }}" class="swiper-container">
+    <div id="display-product-carousel{{ module }}-{{ number }}" class="swiper-container swiper-container{{ module }}">
       <div class="swiper-wrapper">
         {% for product in products %}
           <div class="swiper-slide product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -100,7 +103,7 @@
 
 {% macro separately_table(products, number, title) %}
   <h4>{{ title }}</h4>
-  <div class="row separately-table{{ number }}">
+  <div class="product-display-nik-separately-table{{ number }}">
     {% for product in products %}
       <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="product-thumb transition">
@@ -146,7 +149,7 @@
 {% macro separately_list(products, number, title) %}
     <h4>{{ title }}</h4>
     {% for product in products %}
-      <div class="row separately-table{{ number }}">
+      <div class="product-display-nik-separately-list{{ number }}">
         <div class="product-layout col-lg-12">
           <div class="product-thumb-list product-thumb transition">
             <div class="product-thumb-list-leftside col-sm-6 col-xs-12">
@@ -194,7 +197,7 @@
 {% endmacro %}
 
 {% macro tab(products, number) %}
-  <div class="row">
+  <div class="product-display-nik-tab{{ number }}">
   {% for product in products %}
       <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="product-thumb transition">
@@ -239,7 +242,7 @@
 
 {% macro tabWithCarousel(products, number, module) %}
   <div class="swiper-viewport">
-    <div id="display-product-tabs-with-carousel{{ module }}-{{ number }}" class="swiper-container">
+    <div id="display-product-tabs-with-carousel{{ module }}-{{ number }}" class="swiper-container swiper-container{{ module }}">
       <div class="swiper-wrapper">
         {% for product in products %}
           <div class="swiper-slide product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -405,7 +408,7 @@
 
 {% macro random_list(products) %}
   {% for product in products %}
-    <div class="product-layout col-lg-12">
+    <div class="product-layout">
       <div class="product-thumb transition">
         <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
         <div class="caption">
@@ -475,7 +478,7 @@
           {% else %}
 
             <div class="swiper-viewport">
-              <div id="display-product-random-carousel{{ module }}" class="swiper-container">
+              <div id="display-product-random-carousel{{ module }}" class="swiper-container swiper-container{{ module }}">
                 <div class="swiper-wrapper">
 
                   {{ _self.random_carousel(random_products) }}
@@ -540,7 +543,7 @@
 
           {% else %}
 
-            <div class="row">
+            <div class="product-display-nik-random-table{{ module }}">
               {{ _self.random_table(random_products) }}
             </div>
 
@@ -571,7 +574,7 @@
 
           {% else %}
 
-            <div class="row">
+            <div class="product-display-nik-random-list{{ module }}">
               {{ _self.random_list(random_products) }}
             </div>
 
@@ -583,52 +586,49 @@
             <h3 class="product-display-nik-heading">{{ name }}</h3>
           {% endif %}
 
-          <div class="row">
-
-            <ul class="nav nav-tabs" id="display_product_tabs{{ module }}">
-              {% if ordered_products %}
-                <li><a href="#ordered{{ module }}" data-toggle="tab">{{ text_ordered }}</a></li>
-              {% endif %}
-              {% if viewed_products %}
-                <li><a href="#viewed{{ module }}" data-toggle="tab">{{ text_viewed }}</a></li>
-              {% endif %}
-              {% if favorite_products %}
-                <li><a href="#favorite{{ module }}" data-toggle="tab">{{ text_favorite }}</a></li>
-              {% endif %}
-              {% if bestsellers_products %}
-                <li><a href="#bestsellers{{ module }}" data-toggle="tab">{{ text_bestsellers }}</a></li>
-              {% endif %}
-              {% if recommended_products %}
-                <li><a href="#recommended{{ module }}" data-toggle="tab">{{ text_recommended }}</a></li>
-              {% endif %}
-            </ul>
-            <div class="tab-content">
-              {% if ordered_products %}
-                <div class="tab-pane" id="ordered{{ module }}">
-                  {{ _self.tab(ordered_products, 1) }}
-                </div>
-              {% endif %}
-              {% if viewed_products %}
-                <div class="tab-pane" id="viewed{{ module }}">
-                  {{ _self.tab(viewed_products, 2) }}
-                </div>
-              {% endif %}
-              {% if favorite_products %}
-                <div class="tab-pane" id="favorite{{ module }}">
-                  {{ _self.tab(favorite_products, 3) }}
-                </div>
-              {% endif %}
-              {% if bestsellers_products %}
-                <div class="tab-pane" id="bestsellers{{ module }}">
-                  {{ _self.tab(bestsellers_products, 4) }}
-                </div>
-              {% endif %}
-              {% if recommended_products %}
-                <div class="tab-pane" id="recommended{{ module }}">
-                  {{ _self.tab(recommended_products, 5) }}
-                </div>
-              {% endif %}
-            </div>
+          <ul class="nav nav-tabs" id="display_product_tabs{{ module }}">
+            {% if ordered_products %}
+              <li><a href="#ordered{{ module }}" data-toggle="tab">{{ text_ordered }}</a></li>
+            {% endif %}
+            {% if viewed_products %}
+              <li><a href="#viewed{{ module }}" data-toggle="tab">{{ text_viewed }}</a></li>
+            {% endif %}
+            {% if favorite_products %}
+              <li><a href="#favorite{{ module }}" data-toggle="tab">{{ text_favorite }}</a></li>
+            {% endif %}
+            {% if bestsellers_products %}
+              <li><a href="#bestsellers{{ module }}" data-toggle="tab">{{ text_bestsellers }}</a></li>
+            {% endif %}
+            {% if recommended_products %}
+              <li><a href="#recommended{{ module }}" data-toggle="tab">{{ text_recommended }}</a></li>
+            {% endif %}
+          </ul>
+          <div class="tab-content">
+            {% if ordered_products %}
+              <div class="tab-pane" id="ordered{{ module }}">
+                {{ _self.tab(ordered_products, 1) }}
+              </div>
+            {% endif %}
+            {% if viewed_products %}
+              <div class="tab-pane" id="viewed{{ module }}">
+                {{ _self.tab(viewed_products, 2) }}
+              </div>
+            {% endif %}
+            {% if favorite_products %}
+              <div class="tab-pane" id="favorite{{ module }}">
+                {{ _self.tab(favorite_products, 3) }}
+              </div>
+            {% endif %}
+            {% if bestsellers_products %}
+              <div class="tab-pane" id="bestsellers{{ module }}">
+                {{ _self.tab(bestsellers_products, 4) }}
+              </div>
+            {% endif %}
+            {% if recommended_products %}
+              <div class="tab-pane" id="recommended{{ module }}">
+                {{ _self.tab(recommended_products, 5) }}
+              </div>
+            {% endif %}
           </div>
 
           <script>
@@ -646,61 +646,66 @@
                   </div>
                 {% endif %}
                 <div class="modal-body">
-                  <ul class="nav nav-tabs" id="display_product_tabs{{ module }}">
-                    {% if ordered_products %}
-                      <li><a href="#ordered{{ module }}" data-toggle="tab">{{ text_ordered }}</a></li>
-                    {% endif %}
-                    {% if viewed_products %}
-                      <li><a href="#viewed{{ module }}" data-toggle="tab">{{ text_viewed }}</a></li>
-                    {% endif %}
-                    {% if favorite_products %}
-                      <li><a href="#favorite{{ module }}" data-toggle="tab">{{ text_favorite }}</a></li>
-                    {% endif %}
-                    {% if bestsellers_products %}
-                      <li><a href="#bestsellers{{ module }}" data-toggle="tab">{{ text_bestsellers }}</a></li>
-                    {% endif %}
-                    {% if recommended_products %}
-                      <li><a href="#recommended{{ module }}" data-toggle="tab">{{ text_recommended }}</a></li>
-                    {% endif %}
-                  </ul>
-                  <div class="tab-content">
-                    {% if ordered_products %}
-                      <div class="tab-pane" id="ordered{{ module }}">
-                        {{ _self.tab(ordered_products, 1) }}
-                      </div>
-                    {% endif %}
-                    {% if viewed_products %}
-                      <div class="tab-pane" id="viewed{{ module }}">
-                        {{ _self.tab(viewed_products, 2) }}
-                      </div>
-                    {% endif %}
-                    {% if favorite_products %}
-                      <div class="tab-pane" id="favorite{{ module }}">
-                        {{ _self.tab(favorite_products, 3) }}
-                      </div>
-                    {% endif %}
-                    {% if bestsellers_products %}
-                      <div class="tab-pane" id="bestsellers{{ module }}">
-                        {{ _self.tab(bestsellers_products, 4) }}
-                      </div>
-                    {% endif %}
-                    {% if recommended_products %}
-                      <div class="tab-pane" id="recommended{{ module }}">
-                        {{ _self.tab(recommended_products, 5) }}
-                      </div>
-                    {% endif %}
+
+                  <div class="display-product-nik-modal-container{{ module }}">
+
+                    <ul class="nav nav-tabs" id="display_product_tabs{{ module }}">
+                      {% if ordered_products %}
+                        <li><a href="#ordered{{ module }}" data-toggle="tab">{{ text_ordered }}</a></li>
+                      {% endif %}
+                      {% if viewed_products %}
+                        <li><a href="#viewed{{ module }}" data-toggle="tab">{{ text_viewed }}</a></li>
+                      {% endif %}
+                      {% if favorite_products %}
+                        <li><a href="#favorite{{ module }}" data-toggle="tab">{{ text_favorite }}</a></li>
+                      {% endif %}
+                      {% if bestsellers_products %}
+                        <li><a href="#bestsellers{{ module }}" data-toggle="tab">{{ text_bestsellers }}</a></li>
+                      {% endif %}
+                      {% if recommended_products %}
+                        <li><a href="#recommended{{ module }}" data-toggle="tab">{{ text_recommended }}</a></li>
+                      {% endif %}
+                    </ul>
+                    <div class="tab-content">
+                      {% if ordered_products %}
+                        <div class="tab-pane" id="ordered{{ module }}">
+                          {{ _self.tab(ordered_products, 1) }}
+                        </div>
+                      {% endif %}
+                      {% if viewed_products %}
+                        <div class="tab-pane" id="viewed{{ module }}">
+                          {{ _self.tab(viewed_products, 2) }}
+                        </div>
+                      {% endif %}
+                      {% if favorite_products %}
+                        <div class="tab-pane" id="favorite{{ module }}">
+                          {{ _self.tab(favorite_products, 3) }}
+                        </div>
+                      {% endif %}
+                      {% if bestsellers_products %}
+                        <div class="tab-pane" id="bestsellers{{ module }}">
+                          {{ _self.tab(bestsellers_products, 4) }}
+                        </div>
+                      {% endif %}
+                      {% if recommended_products %}
+                        <div class="tab-pane" id="recommended{{ module }}">
+                          {{ _self.tab(recommended_products, 5) }}
+                        </div>
+                      {% endif %}
+                    </div>
+
                   </div>
+
                 </div>
 
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ button_close }}</button>
                 </div>
               </div>
             </div>
           </div>
 
           <script>
-
               $(document).ready(function () {
                   $('#display_product_tabs{{ module }} a:first').tab('show');
                   $('.{{ button_class }}').on('click', function () {
