@@ -11,3 +11,5 @@ $_['text_recommended'] = 'Рекомендуемые';
 // Text
 $_['text_tax']      = 'Без НДС:';
 
+// Buttons
+$_['button_close']     = 'Закрыть';
